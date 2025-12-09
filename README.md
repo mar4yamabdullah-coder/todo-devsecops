@@ -1,1 +1,1 @@
-Added description to README
+Added description to README.
