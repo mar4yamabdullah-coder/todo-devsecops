@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Your Tasks</h2>
+
+<!-- Form to add a new task -->
+<form action="{{ url_for('add_task') }}" method="post">
+    <input type="text" name="description" placeholder="New Task">
+    <button type="submit">Add</button>
+</form>
+
+<br>
+
+<ul>
+    {% for task in tasks %}
+
+        <!-- SAFE version (مُعطل) -->
+        <!-- <li>{{ task.description }}</li> -->
+
+        <!-- UNSAFE version — XSS ENABLED -->
+        <li>{{ task.description | safe }}</li>
+
+        <!-- Delete button -->
+        <form action="{{ url_for('delete_task', task_id=task.id) }}" method="post" style="display:inline;">
+            <button type="submit">Delete</button>
+        </form>
+
+        <br>
+    {% endfor %}
+</ul>
+
+<br>
+
+<!-- Logout -->
+<form action="{{ url_for('logout') }}" method="get">
+    <button type="submit">Logout</button>
+</form>
+
+{% endblock %}
