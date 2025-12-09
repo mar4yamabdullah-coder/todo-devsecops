@@ -22,3 +22,16 @@ def insecure_search():
     conn.close()
 
     return {"results": rows}
+# --- Insecure command execution for demo (Bandit will detect this) ---
+import subprocess
+
+@app.route("/insecure-shell")
+def insecure_shell():
+    # Example URL: /insecure-shell?cmd=ls
+    cmd = request.args.get("cmd", "echo hello")
+
+    # VULNERABLE: user input is passed directly to the shell
+    subprocess.Popen("echo " + cmd, shell=True)  # <-- Bandit will flag this
+
+    return {"status": "command executed (insecure)"}
+
