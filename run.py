@@ -22,6 +22,7 @@ def insecure_search():
     conn.close()
 
     return {"results": rows}
+
 # --- Insecure command execution for demo (Bandit will detect this) ---
 import subprocess
 
@@ -34,4 +35,3 @@ def insecure_shell():
     subprocess.Popen("echo " + cmd, shell=True)  # <-- Bandit will flag this
 
     return {"status": "command executed (insecure)"}
-
